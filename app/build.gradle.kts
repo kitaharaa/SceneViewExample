@@ -50,4 +50,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     // SceneView
     implementation ("io.github.sceneview:sceneview:2.3.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 }

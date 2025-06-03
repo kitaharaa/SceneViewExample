@@ -36,4 +36,58 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:trackColor="#3FFFFFFF" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/up"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_button"
+        android:src="@drawable/top"
+        android:tint="@color/blue"
+        android:scaleType="center"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/down"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_button"
+        android:src="@drawable/down"
+        android:tint="@color/blue"
+        android:scaleType="center"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sceneView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/left"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_button"
+        android:src="@drawable/left"
+        android:tint="@color/blue"
+        android:scaleType="center"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sceneView"
+        app:layout_constraintEnd_toStartOf="@+id/up"
+        app:layout_constraintTop_toTopOf="@+id/up" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/right"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_button"
+        android:src="@drawable/right"
+        android:tint="@color/blue"
+        android:scaleType="center"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sceneView"
+        app:layout_constraintStart_toEndOf="@+id/up"
+        app:layout_constraintTop_toTopOf="@+id/up" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

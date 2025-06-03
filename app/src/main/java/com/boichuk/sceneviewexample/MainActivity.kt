@@ -1,26 +1,29 @@
 package com.boichuk.sceneviewexample
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
+import android.util.Log
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
 import com.boichuk.sceneviewexample.databinding.ActivityMainBinding
 import io.github.sceneview.SceneView
 import io.github.sceneview.math.Position
 import io.github.sceneview.math.Scale
+import io.github.sceneview.model.ModelInstance
 import io.github.sceneview.node.ModelNode
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sceneView: SceneView
     private lateinit var loadingView: View
     private lateinit var binding: ActivityMainBinding
+    private val fileProcessing: GlbFileProcessing by lazy { GlbFileProcessing() }
+    private lateinit var modelNode: ModelNode
+
+    // We'll simulate pivot movement by shifting this position
+    private var pivotOffset = Position(0f, 0.4f, 0f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,24 +37,55 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         lifecycleScope.launch {
-            val hdrFile = "environments/studio_small_09_2k.hdr"
-            sceneView.environmentLoader.loadHDREnvironment(hdrFile).apply {
-                sceneView.indirectLight = this?.indirectLight
-                sceneView.skybox = this?.skybox
-            }
-            sceneView.cameraNode.apply {
-//                position = Position(/*z = 4.0f*/ x = .5f, y = .5f)
-            }
+//            TODO use to load background
+//            val hdrFile = "environments/studio_small_09_2k.hdr"
+//            sceneView.environmentLoader.loadHDREnvironment(hdrFile).apply {
+//                sceneView.indirectLight = this?.indirectLight
+//                sceneView.skybox = this?.skybox
+//            }
 
-            val modelInstance = sceneView.modelLoader.createModelInstance("models/Schwimmhalle.glb")
-            val modelNode = ModelNode(
-                modelInstance = modelInstance,
-                scaleToUnits = 2.0f,
-                centerOrigin = Position(-.5f, -.5f, .5f)
-            )
-            modelNode.scale = Scale(0.04f)
-            sceneView.addChildNode(modelNode)
+            launch(Dispatchers.IO) { fileProcessing.getFileJson(this@MainActivity) }
+            setupModel()
             loadingView.isGone = true
         }
+
+        with(binding) {
+            up.setOnClickListener { movePivot(BoxMovementAction.IN) }
+            down.setOnClickListener { movePivot(BoxMovementAction.OUT) }
+            left.setOnClickListener { movePivot(BoxMovementAction.LEFT) }
+            right.setOnClickListener { movePivot(BoxMovementAction.RIGHT) }
+        }
+    }
+
+    private fun setupModel() {
+        val file = fileProcessing.getGlbFile(this@MainActivity)
+        val modelInstance = sceneView.modelLoader.createModelInstance(file)
+        modelNode = ModelNode(
+            modelInstance = modelInstance,
+        ).apply {
+            scale = Scale(0.04f)
+            position = -pivotOffset
+        }
+
+        sceneView.addChildNode(modelNode)
+    }
+
+    private fun movePivot(action: BoxMovementAction) {
+        val step = 0.1f
+        pivotOffset = when (action) {
+            BoxMovementAction.UP -> pivotOffset.copy(y = pivotOffset.y + step)
+            BoxMovementAction.DOWN -> pivotOffset.copy(y = pivotOffset.y - step)
+            BoxMovementAction.LEFT -> pivotOffset.copy(x = pivotOffset.x - step)
+            BoxMovementAction.RIGHT -> pivotOffset.copy(x = pivotOffset.x + step)
+            BoxMovementAction.IN -> pivotOffset.copy(z = pivotOffset.z - step)
+            BoxMovementAction.OUT -> pivotOffset.copy(z = pivotOffset.z + step)
+        }
+
+        modelNode.position = -pivotOffset
+        Log.d("PivotOffset", "New simulated pivot: $pivotOffset")
+    }
+
+    enum class BoxMovementAction {
+        UP, DOWN, LEFT, RIGHT, IN, OUT;
     }
 }

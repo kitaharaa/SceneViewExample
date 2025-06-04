@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomSheetLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_grey_border"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="45dp"
+            android:layout_height="5dp"
+            android:background="@drawable/rounded_toast_corners" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:paddingHorizontal="16dp"
+            android:text="ScaffoldBox Name"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/creatorTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp"
+        android:text="Creator"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/creatorDetails"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:text="Rick Grimes"
+        android:textColor="@color/black" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/descriptionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp"
+        android:text="Description"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/descriptionDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+
+        android:text="some scaffold box"
+        android:textColor="@color/black" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/createTimeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp"
+        android:text="Create time"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/createTimeDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+
+        android:text="14.09.2025"
+        android:textColor="@color/black" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+
+        android:layout_height="3dp"
+
+        android:layout_marginBottom="32dp"
+        android:textColor="@color/black" />
+
+
+</LinearLayout>

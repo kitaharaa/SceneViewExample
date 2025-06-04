@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false" >
+    android:clipToPadding="false">
 
     <ImageView
         android:id="@+id/imageView"
@@ -42,10 +42,10 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:background="@drawable/bg_button"
+        android:padding="12dp"
+        android:scaleType="center"
         android:src="@drawable/top"
         android:tint="@color/blue"
-        android:scaleType="center"
-        android:padding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/down"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -54,11 +54,11 @@
         android:id="@+id/down"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/bg_button"
+        android:scaleType="center"
         android:src="@drawable/down"
         android:tint="@color/blue"
-        android:scaleType="center"
-        android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/sceneView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -68,11 +68,11 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:background="@drawable/bg_button"
+        android:padding="12dp"
+        android:scaleType="center"
         android:src="@drawable/left"
         android:tint="@color/blue"
-        android:scaleType="center"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/sceneView"
+        app:layout_constraintBottom_toBottomOf="@+id/down"
         app:layout_constraintEnd_toStartOf="@+id/up"
         app:layout_constraintTop_toTopOf="@+id/up" />
 
@@ -81,13 +81,22 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:background="@drawable/bg_button"
+        android:padding="12dp"
+        android:scaleType="center"
         android:src="@drawable/right"
         android:tint="@color/blue"
-        android:scaleType="center"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/sceneView"
+        app:layout_constraintBottom_toBottomOf="@+id/down"
         app:layout_constraintStart_toEndOf="@+id/up"
         app:layout_constraintTop_toTopOf="@+id/up" />
 
+    <ImageView
+        android:id="@+id/info"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/outline_info_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

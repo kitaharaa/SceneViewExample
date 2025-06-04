@@ -3,14 +3,17 @@ package com.boichuk.sceneviewexample
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
 import com.boichuk.sceneviewexample.databinding.ActivityMainBinding
+import com.boichuk.sceneviewexample.databinding.LayoutModelInfoBottomSheetBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.github.sceneview.SceneView
 import io.github.sceneview.math.Position
 import io.github.sceneview.math.Scale
-import io.github.sceneview.model.ModelInstance
 import io.github.sceneview.node.ModelNode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     // We'll simulate pivot movement by shifting this position
     private var pivotOffset = Position(0f, 0.4f, 0f)
+    private lateinit var dialog: BottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +58,23 @@ class MainActivity : AppCompatActivity() {
             down.setOnClickListener { movePivot(BoxMovementAction.OUT) }
             left.setOnClickListener { movePivot(BoxMovementAction.LEFT) }
             right.setOnClickListener { movePivot(BoxMovementAction.RIGHT) }
+
+            info.setOnClickListener { dialog.show() }
+        }
+
+        setupInfoBottomSheet()
+    }
+
+    private fun setupInfoBottomSheet() {
+        val binding = LayoutModelInfoBottomSheetBinding.inflate(layoutInflater)
+        dialog = BottomSheetDialog(this)
+        dialog.setContentView(binding.root)
+        val bottomSheet = dialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+        bottomSheet?.let {
+            val behavior = BottomSheetBehavior.from(it)
+//            behavior.peekHeight = 53  // <-- visible part before drag (in pixels)
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            behavior.isDraggable = true
         }
     }
 

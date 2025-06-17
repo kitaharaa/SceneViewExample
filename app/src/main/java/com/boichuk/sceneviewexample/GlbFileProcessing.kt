@@ -30,7 +30,7 @@ class GlbFileProcessing {
         gblOutput.writeText(json.toString())
     }
 
-    private fun parseGlbBufferWithGson(buffer: ByteBuffer): JsonObject {
+    /*private fun parseGlbBufferWithGson(buffer: ByteBuffer): JsonObject {
         val gson = Gson()
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         buffer.position(12) // Skip GLB header: magic(4) + version(4) + length(4)
@@ -43,6 +43,33 @@ class GlbFileProcessing {
         val jsonString = String(jsonBytes, Charsets.UTF_8)
         val jsonObject = gson.fromJson(jsonString, JsonObject::class.java)
         return jsonObject
+    }*/
+    private fun parseGlbBufferWithGson(buffer: ByteBuffer): JsonObject {
+        val gson = Gson()
+        buffer.order(ByteOrder.LITTLE_ENDIAN)
+        buffer.position(12) // Skip GLB header: magic(4) + version(4) + length(4)
+
+        // Read JSON chunk
+        val jsonLength = buffer.int
+        val jsonType = buffer.int
+        require(jsonType == 0x4E4F534A) { "Expected JSON chunk (type 'JSON' in ASCII)" }
+
+        val jsonBytes = ByteArray(jsonLength)
+        buffer.get(jsonBytes)
+        val jsonString = String(jsonBytes, Charsets.UTF_8)
+
+        val fullJson = gson.fromJson(jsonString, JsonObject::class.java)
+
+        // Create new object with only "extras" and "nodes"
+        val minimalJson = JsonObject()
+        if (fullJson.has("extras")) {
+            minimalJson.add("extras", fullJson.get("extras"))
+        }
+        if (fullJson.has("nodes")) {
+            minimalJson.add("nodes", fullJson.get("nodes"))
+        }
+
+        return fullJson
     }
 }
 
